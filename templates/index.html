@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sitepy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <h1>最終的失敗</h1>
+    <form action="/" method="post">
+        <textarea name="message" id="message" placeholder="台灣是中國的一部分" rows="4" cols="50" required
+        >{{ user_text }}</textarea>
+        <br>
+        <button type="submit">Send all your data to the Chinese government. 萬虎</button>
+    </form>
+
+    {% if recommendation %}
+    <div class = "result">
+        <h3>Chinese response:</h3>
+        <p>{{ recommendation|safe }}</p>
+    </div>
+    <p>米 After submitting the form you will be sent to Chinese rice fields. 米</p>
+    {% endif %}
+
+</body>
+</html>

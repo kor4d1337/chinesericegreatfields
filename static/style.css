@@ -1,0 +1,44 @@
+h1{
+    text-align: center;
+    color: black
+}
+
+textarea {
+    width: 80%;
+    padding: 8px;
+    font-size: 16px;
+}
+
+button{
+    margin-top: 8px;
+    padding: 12px;
+    font-size: 16px;
+    cursor: grab;
+}
+
+h2{
+    text-align: center;
+}
+
+body {
+    font-family: system-ui;
+    background: #ffffff;
+    color: #222;
+    padding: 21px;
+    cursor: crosshair;
+}
+
+.SocialRating{
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    width: 800px;
+    cursor: crosshair;
+}
+
+blockquote{
+    background: gray;
+    padding: 10px;
+    border-left: black;
+}
