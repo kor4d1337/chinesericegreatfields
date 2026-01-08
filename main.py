@@ -17,7 +17,7 @@ def generate_recommendation(mood):
     inputs = tokenizer(prompt, return_tensors="pt")
     outputs = model.generate(
         **inputs,
-        max_length = 150,
+        max_length = 50,
         do_sample = False,
         top_p = 0.9,
         temperature = 1
