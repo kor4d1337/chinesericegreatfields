@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from transformers import pipeline
+from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 
 app = Flask(__name__)
 
@@ -7,6 +7,23 @@ sentiment_analyzer = pipeline(
     "sentiment-analysis",
     model = "blanchefort/rubert-base-cased-sentiment"
 )
+
+tokenizer = AutoTokenizer.from_pretrained("ai-forever/rugpt3medium_based_on_gpt2")
+model = AutoModelForCausalLM.from_pretrained("ai-forever/rugpt3medium_based_on_gpt2")
+
+def generate_recommendation(mood):
+    prompt = (f"Посоветуй один популярный сериал для человека, у которого {mood} настроение."
+              f"Назовит только сериал и кратко объясни почему.")
+    inputs = tokenizer(prompt, return_tensors="pt")
+    outputs = model.generate(
+        **inputs,
+        max_length = 150,
+        do_sample = False,
+        top_p = 0.9,
+        temperature = 1
+    )
+    text = tokenizer.decode(outputs[0], skip_special_tokens = True)
+    return text[len(prompt):].strip()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -20,12 +37,15 @@ def index():
         label = result["label"]
 
         if label == "POSITIVE":
-            recommendation = "Good, + 15 social credit <img class=\"SocialRating\" src=\"https://i.redd.it/nzxcf6vxle081.png\">"
+            mood = "хорошее"
         elif label == "NEGATIVE":
-            recommendation = "1.. 2.. 3.. For the Chinese 槍射擊 <img class=\"SocialRating\" src=\"https://static.vecteezy.com/system/resources/thumbnails/049/188/191/small/man-aims-through-the-sight-of-combat-metal-pistol-to-hit-the-target-photo.jpg\">"
+            mood = "плохое"
         else:
-            recommendation = "cookies <img class=\"SocialRating\" src=\"https://cs4.pikabu.ru/post_img/big/2015/09/17/6/1442476979_1461212557.jpg\">"
+            mood = "нейтральное"
         
+        ai_text = generate_recommendation(mood)
+        recommendation = f"Настроение: {mood}. <br>Рекомендация: {ai_text}"
+
     return render_template("index.html", recommendation=recommendation, user_text=user_text)
 
 if __name__ == "__main__":
