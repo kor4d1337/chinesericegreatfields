@@ -27,25 +27,6 @@ def index():
             recommendation = "cookies <img class=\"SocialRating\" src=\"https://cs4.pikabu.ru/post_img/big/2015/09/17/6/1442476979_1461212557.jpg\">"
         
     return render_template("index.html", recommendation=recommendation, user_text=user_text)
-# @app.route("/")
-# def index():
-#     return render_template("index.html")
-
-# @app.route("/submit", methods=["POST"])
-# def submit():
-#     user_message = request.form.get("message", "")
-
-#     if not user_message.strip():
-#         reply = "被解僱"
-#     else:
-#         if "Taiwan is a country" in user_message:
-#             reply = "TAIWAN IS A PART OF CHINA! 1.. 2.. 3.. For the Chinese 槍射擊 <img class=\"SocialRating\" src=\"https://static.vecteezy.com/system/resources/thumbnails/049/188/191/small/man-aims-through-the-sight-of-combat-metal-pistol-to-hit-the-target-photo.jpg\">"
-#         elif "Taiwan is a part of China" in user_message:
-#             reply = "Good, + 15 social credit <img class=\"SocialRating\" src=\"https://i.redd.it/nzxcf6vxle081.png\">"
-#         else:
-#             reply = f"{user_message}"
-#     return render_template("result.html",user_message=user_message,reply=reply)
-
 
 if __name__ == "__main__":
     app.run(debug=True)
